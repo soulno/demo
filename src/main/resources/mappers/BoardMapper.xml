@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.demo.dao.BoardMapper">
+  <insert id="insert">
+  insert into board(title, writer, content,regdate)
+  values(#{title},#{writer},#{content}, now())
+  </insert>
+  
+  <select id="list" resultType="BoardDTO">
+  select * from board order by num desc
+  </select>
+  
+  <select id="count" resultType="int">
+  select count(*) from board
+  </select>
+  <!--   상세보기 -->
+  <select id="findByNum" resultType="BoardDTO">
+  select * from board where num=#{num}
+  </select>
+  <!--  수정하기 -->
+  <update id="update">
+  update board set title=#{title}, content=#{content}, regdate=now() where num=#{num}
+  </update>
+  <!-- 삭제 -->
+  <delete id="delete">
+  delete from board where num=#{num}
+  </delete>
+  
+  <!-- replyCnt 1 증가/감소 -->
+  <update id="updateReplyCnt">
+  update board set replycnt = replycnt+#{amount}
+  where num =#{bnum}
+  </update>
+  
+  
+  
+</mapper>
